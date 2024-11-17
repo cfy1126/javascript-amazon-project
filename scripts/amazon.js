@@ -1,4 +1,4 @@
-import { cart } from '../data/cart.js';
+import { cart, addToCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 
 let productsListHTML = '';
@@ -60,31 +60,19 @@ document.querySelector('.js-products-grid').innerHTML = productsListHTML;
 document.querySelectorAll('.add-to-cart-button').forEach((button) => {
   button.addEventListener('click', (event) => {
     const productId = event.target.dataset.productId;
-    let productIndex = -1;
-    cart.forEach((cartItem, index) => {
-      if (cartItem.productId === productId) {
-        cart[index].quantity++;
-        productIndex = index;
-      }
-    });
-    if (productIndex === -1) {
-      cart.push({
-        productId,
-        quantity: 1,
-      });
-    }
-    renderCartCount();
+    addToCart(productId);
+    updateCartQuantity();
   });
 });
 
-renderCartCount();
+updateCartQuantity();
 /**
  * 右上角购物车数量
  */
-function renderCartCount() {
+function updateCartQuantity() {
   let cartQuantity = 0;
-  cart.forEach((item) => {
-    cartQuantity += item.quantity;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
   });
   document.querySelector('.js-cart-quantity').innerText = cartQuantity;
 }
