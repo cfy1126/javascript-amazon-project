@@ -40,7 +40,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-message-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -55,11 +55,25 @@ products.forEach((product) => {
 });
 document.querySelector('.js-products-grid').innerHTML = productsListHTML;
 document.querySelectorAll('.add-to-cart-button').forEach((button) => {
+  let timeoutId = 0;
   button.addEventListener('click', (event) => {
-    const productId = event.target.dataset.productId;
+    const { productId } = event.target.dataset;
+    // 产品数量选择器
     const updateQuantity = document.querySelector(
       `.js-quantity-selector-${productId}`
     ).value;
+    // “Added”消息
+    const addedMessageElement = document.querySelector(
+      `.js-added-message-${productId}`
+    );
+    addedMessageElement.classList.add('added-to-cart-visible');
+    if(timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      addedMessageElement.classList.remove('added-to-cart-visible');
+    }, 2000);
+    // 更新购物车
     let productIndex = -1;
     cart.forEach((cartItem, index) => {
       if (cartItem.productId === productId) {
