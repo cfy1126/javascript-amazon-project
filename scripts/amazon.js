@@ -70,5 +70,18 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
         quantity: 1
       });
     }
+    renderCartCount();
   });
 });
+
+renderCartCount();
+/**
+ * 右上角购物车数量
+ */
+function renderCartCount() {
+  let cartQuantity = 0;
+  cart.forEach((item)=>{
+    cartQuantity += item.quantity;
+  })
+  document.querySelector('.js-cart-quantity').innerText = cartQuantity;
+}
