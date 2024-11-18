@@ -1,10 +1,16 @@
 import { cart } from '../data/cart.js';
 import { products } from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 
-let cartHTML = '';
+let cartSummaryHTML = '';
 cart.forEach((cartItem) => {
-  const product = products.find((product)=> product.id === cartItem.productId);
-  cartHTML += `
+  let matchingProduct;
+  products.forEach((product)=>{
+    if(product.id === cartItem.productId){
+      matchingProduct = product;
+    }
+  })
+  cartSummaryHTML += `
     <div class="cart-item-container">
     <div class="delivery-date">
       Delivery date: Tuesday, June 21
@@ -12,14 +18,14 @@ cart.forEach((cartItem) => {
 
     <div class="cart-item-details-grid">
       <img class="product-image"
-        src="${product.image}">
+        src="${matchingProduct.image}">
 
       <div class="cart-item-details">
         <div class="product-name">
-          ${product.name}
+          ${matchingProduct.name}
         </div>
         <div class="product-price">
-          $${(product.priceCents / 100).toFixed(2)}
+          $${formatCurrency(matchingProduct.priceCents)}
         </div>
         <div class="product-quantity">
           <span>
@@ -41,7 +47,7 @@ cart.forEach((cartItem) => {
         <div class="delivery-option">
           <input type="radio" checked
             class="delivery-option-input"
-            name="delivery-option-1">
+            name="delivery-option-${matchingProduct.id}">
           <div>
             <div class="delivery-option-date">
               Tuesday, June 21
@@ -54,7 +60,7 @@ cart.forEach((cartItem) => {
         <div class="delivery-option">
           <input type="radio"
             class="delivery-option-input"
-            name="delivery-option-1">
+            name="delivery-option-${matchingProduct.id}">
           <div>
             <div class="delivery-option-date">
               Wednesday, June 15
@@ -67,7 +73,7 @@ cart.forEach((cartItem) => {
         <div class="delivery-option">
           <input type="radio"
             class="delivery-option-input"
-            name="delivery-option-1">
+            name="delivery-option-${matchingProduct.id}">
           <div>
             <div class="delivery-option-date">
               Monday, June 13
@@ -82,4 +88,4 @@ cart.forEach((cartItem) => {
   </div>
   `;
 });
-document.querySelector('.js-order-summary').innerHTML = cartHTML;
+document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
