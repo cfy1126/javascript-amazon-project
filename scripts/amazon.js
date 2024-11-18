@@ -1,7 +1,6 @@
-import { cart, addToCart } from '../data/cart.js';
+import { cart, addToCart, calculateQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
-import { calculateQuantity } from './utils/cart.js';
 
 let productsListHTML = '';
 products.forEach((product) => {
@@ -86,5 +85,6 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
 showCartQuantity();
 // 显示购物车数量
 function showCartQuantity() {
-  document.querySelector('.js-cart-quantity').innerText = calculateQuantity(cart);
+  document.querySelector('.js-cart-quantity').innerText =
+    calculateQuantity(cart);
 }
