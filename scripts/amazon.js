@@ -1,6 +1,7 @@
 import { cart, addToCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+import { calculateQuantity } from './utils/cart.js';
 
 let productsListHTML = '';
 products.forEach((product) => {
@@ -78,19 +79,12 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
       addedMessageElement.classList.remove('added-to-cart-visible');
     }, 2000);
     // 更新购物车
-    addToCart(productId,updateQuantity);
-    updateCartQuantity();
+    addToCart(productId, updateQuantity);
+    showCartQuantity();
   });
 });
-
-updateCartQuantity();
-/**
- * 右上角购物车数量
- */
-function updateCartQuantity() {
-  let cartQuantity = 0;
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
-  });
-  document.querySelector('.js-cart-quantity').innerText = cartQuantity;
+showCartQuantity();
+// 显示购物车数量
+function showCartQuantity() {
+  document.querySelector('.js-cart-quantity').innerText = calculateQuantity(cart);
 }
