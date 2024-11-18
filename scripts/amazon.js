@@ -78,20 +78,7 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
       addedMessageElement.classList.remove('added-to-cart-visible');
     }, 2000);
     // 更新购物车
-    let productIndex = -1;
-    cart.forEach((cartItem, index) => {
-      if (cartItem.productId === productId) {
-        cart[index].quantity += Number(updateQuantity);
-        productIndex = index;
-      }
-    });
-    if (productIndex === -1) {
-      cart.push({
-        productId,
-        quantity: Number(updateQuantity),
-      });
-    }
-    addToCart(productId);
+    addToCart(productId,updateQuantity);
     updateCartQuantity();
   });
 });

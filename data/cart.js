@@ -13,18 +13,18 @@ export function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-export function addToCart(productId) {
+export function addToCart(productId,updateQuantity) {
   let productIndex = -1;
   cart.forEach((cartItem, index) => {
     if (cartItem.productId === productId) {
-      cart[index].quantity++;
+      cart[index].quantity += Number(updateQuantity);
       productIndex = index;
     }
   });
   if (productIndex === -1) {
     cart.push({
       productId,
-      quantity: 1,
+      quantity: Number(updateQuantity),
     });
   }
   saveToStorage();
