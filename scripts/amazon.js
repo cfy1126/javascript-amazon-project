@@ -1,3 +1,7 @@
+import { cart, addToCart } from '../data/cart.js';
+import { products } from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
+
 let productsListHTML = '';
 products.forEach((product) => {
   productsListHTML += `
@@ -20,7 +24,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)}
+            $${formatCurrency(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
@@ -67,7 +71,7 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
       `.js-added-message-${productId}`
     );
     addedMessageElement.classList.add('added-to-cart-visible');
-    if(timeoutId) {
+    if (timeoutId) {
       clearTimeout(timeoutId);
     }
     timeoutId = setTimeout(() => {
@@ -87,18 +91,19 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
         quantity: Number(updateQuantity),
       });
     }
-    renderCartCount();
+    addToCart(productId);
+    updateCartQuantity();
   });
 });
 
-renderCartCount();
+updateCartQuantity();
 /**
  * 右上角购物车数量
  */
-function renderCartCount() {
+function updateCartQuantity() {
   let cartQuantity = 0;
-  cart.forEach((item) => {
-    cartQuantity += item.quantity;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
   });
   document.querySelector('.js-cart-quantity').innerText = cartQuantity;
 }
