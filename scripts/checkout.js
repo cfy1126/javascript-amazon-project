@@ -43,12 +43,14 @@ cart.forEach((cartItem) => {
           }">
             Update
           </span>
-          <input class="quantity-input js-quantity-input" data-product-id="${
+          <input class="quantity-input js-quantity-input-${
             matchingProduct.id
-          }" type="number" value="${cartItem.quantity}">
-          <span class="link-primary save-quantity-link js-save-link js-save-link-${matchingProduct.id}" data-product-id="${
+          }" data-product-id="${matchingProduct.id}" type="number" value="${
+    cartItem.quantity
+  }">
+          <span class="link-primary save-quantity-link js-save-link js-save-link-${
             matchingProduct.id
-          }">Save</span>
+          }" data-product-id="${matchingProduct.id}">Save</span>
           <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${
             matchingProduct.id
           }">
@@ -138,13 +140,17 @@ document.querySelectorAll('.js-save-link').forEach((link) => {
     document
       .querySelector(`.js-cart-item-container-${productId}`)
       .classList.remove('is-editing-quantity');
-    const newQuantity = document.querySelector(
-      `.js-cart-item-container-${productId} .quantity-input`
-    ).value;
-    if(newQuantity>0 && newQuantity<1000){
+    const quantityInput = document.querySelector(
+      `.js-quantity-input-${productId}`
+    );
+    const newQuantity = Number(quantityInput.value);
+    if (newQuantity > 0 && newQuantity < 1000) {
       updateQuantity(productId, newQuantity);
-    }else{
+    } else {
       alert('qiutity should be between 1 and 999');
+      quantityInput.value =
+        cart.find((cartItem) => cartItem.productId === productId).quantity;
+      return;
     }
     document.querySelector(
       `.js-cart-item-container-${productId} .quantity-label`
@@ -156,9 +162,8 @@ document.querySelectorAll('.js-save-link').forEach((link) => {
 document.querySelectorAll('.js-quantity-input').forEach((link) => {
   link.addEventListener('keydown', (event) => {
     const { productId } = link.dataset;
-    if(event.key === 'Enter'){
+    if (event.key === 'Enter') {
       document.querySelector(`.js-save-link-${productId}`).click();
     }
   });
 });
-

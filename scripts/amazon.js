@@ -86,5 +86,5 @@ showCartQuantity();
 // 显示购物车数量
 function showCartQuantity() {
   document.querySelector('.js-cart-quantity').innerText =
-    calculateQuantity(cart);
+    calculateQuantity();
 }
