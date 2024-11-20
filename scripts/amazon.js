@@ -63,9 +63,10 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
   button.addEventListener('click', (event) => {
     const { productId } = event.target.dataset;
     // 产品数量选择器
-    const updateQuantity = document.querySelector(
+    const quantitySelect = document.querySelector(
       `.js-quantity-selector-${productId}`
-    ).value;
+    );
+    const updateQuantity = Number(quantitySelect.value);
     // “Added”消息
     const addedMessageElement = document.querySelector(
       `.js-added-message-${productId}`
