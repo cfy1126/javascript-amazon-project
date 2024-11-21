@@ -1,4 +1,4 @@
-import { cart, addToCart } from '../data/cart.js';
+import { cart, addToCart, calculateQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -28,7 +28,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="js-quantity-selector-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -44,7 +44,7 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-message-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -59,21 +59,33 @@ products.forEach((product) => {
 });
 document.querySelector('.js-products-grid').innerHTML = productsListHTML;
 document.querySelectorAll('.add-to-cart-button').forEach((button) => {
+  let timeoutId = 0;
   button.addEventListener('click', (event) => {
-    const productId = event.target.dataset.productId;
-    addToCart(productId);
-    updateCartQuantity();
+    const { productId } = event.target.dataset;
+    // 产品数量选择器
+    const quantitySelect = document.querySelector(
+      `.js-quantity-selector-${productId}`
+    );
+    const updateQuantity = Number(quantitySelect.value);
+    // “Added”消息
+    const addedMessageElement = document.querySelector(
+      `.js-added-message-${productId}`
+    );
+    addedMessageElement.classList.add('added-to-cart-visible');
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      addedMessageElement.classList.remove('added-to-cart-visible');
+    }, 2000);
+    // 更新购物车
+    addToCart(productId, updateQuantity);
+    showCartQuantity();
   });
 });
-
-updateCartQuantity();
-/**
- * 右上角购物车数量
- */
-function updateCartQuantity() {
-  let cartQuantity = 0;
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
-  });
-  document.querySelector('.js-cart-quantity').innerText = cartQuantity;
+showCartQuantity();
+// 显示购物车数量
+function showCartQuantity() {
+  document.querySelector('.js-cart-quantity').innerText =
+    calculateQuantity();
 }
