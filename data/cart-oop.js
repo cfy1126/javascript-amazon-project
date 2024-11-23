@@ -95,10 +95,11 @@ function Cart(localStorageKey) {
 const cart = Cart('cart');
 const businessCart = Cart('cart-oop');
 
-cart.loadFromStorage();
-businessCart.loadFromStorage();
+
 
 console.log(cart);
 console.log(businessCart);
+
+console.log(cart instanceof Cart);
 
 
