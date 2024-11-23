@@ -1,6 +1,5 @@
 import { cart, addToCart, calculateQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
 
 let productsListHTML = '';
 products.forEach((product) => {
@@ -17,14 +16,14 @@ products.forEach((product) => {
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars * 10}.png">
+              src="${product.getStarsUrl()}">
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${formatCurrency(product.priceCents)}
+            ${product.getPrice()}
           </div>
 
           <div class="product-quantity-container">
@@ -86,6 +85,5 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
 showCartQuantity();
 // 显示购物车数量
 function showCartQuantity() {
-  document.querySelector('.js-cart-quantity').innerText =
-    calculateQuantity();
+  document.querySelector('.js-cart-quantity').innerText = calculateQuantity();
 }
