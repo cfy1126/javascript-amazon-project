@@ -5,7 +5,11 @@ import {
   updateDeliveryOption,
 } from '../../data/cart.js';
 import { getProduct } from '../../data/products.js';
-import { deliveryOptions, getDeliveryOption, calculateDeliveryDate} from '../../data/deliveryOptions.js';
+import {
+  deliveryOptions,
+  getDeliveryOption,
+  calculateDeliveryDate,
+} from '../../data/deliveryOptions.js';
 import { formatCurrency } from '../utils/money.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
@@ -20,7 +24,7 @@ export function renderOrderSummary() {
     cartSummaryHTML += `
     <div class="cart-item-container js-cart-item-container-${
       matchingProduct.id
-    }">
+    } js-cart-item-container">
     <div class="delivery-date js-delivery-date-${matchingProduct.id}">
       Delivery date: ${dateStirng}
     </div>
@@ -30,13 +34,13 @@ export function renderOrderSummary() {
         src="${matchingProduct.image}">
 
       <div class="cart-item-details">
-        <div class="product-name">
+        <div class="product-name js-product-name-${matchingProduct.id}">
           ${matchingProduct.name}
         </div>
-        <div class="product-price">
+        <div class="product-price js-product-price-${matchingProduct.id}">
           $${formatCurrency(matchingProduct.priceCents)}
         </div>
-        <div class="product-quantity">
+        <div class="product-quantity js-product-quantity-${matchingProduct.id}">
           <span>
             Quantity: <span class="quantity-label">${cartItem.quantity}</span>
           </span>
@@ -53,9 +57,9 @@ export function renderOrderSummary() {
           <span class="link-primary save-quantity-link js-save-link js-save-link-${
             matchingProduct.id
           }" data-product-id="${matchingProduct.id}">Save</span>
-          <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${
+          <span class="delete-quantity-link link-primary js-delete-link js-delete-link-${
             matchingProduct.id
-          }">
+          }" data-product-id="${matchingProduct.id}">
             Delete
           </span>
         </div>
@@ -83,13 +87,13 @@ export function renderOrderSummary() {
       const isChecked =
         cartItem.deliveryOptionId === option.id ? 'checked' : '';
       deliveryOptionsHTML += `
-      <div class="delivery-option js-delivery-option"
+      <div class="delivery-option js-delivery-option js-delivery-option-${matchingProduct.id}-${option.id}"
         data-product-id="${matchingProduct.id}"
         data-delivery-option-id="${option.id}"
       >
         <input type="radio"
           ${isChecked}
-          class="delivery-option-input"
+          class="delivery-option-input js-delivery-option-input-${matchingProduct.id}-${option.id}"
           name="delivery-option-${matchingProduct.id}">
         <div>
           <div class="delivery-option-date">

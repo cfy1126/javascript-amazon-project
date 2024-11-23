@@ -48,3 +48,15 @@ export function calculateDeliveryDate(deliveryOption) {
   const dateStirng = deliveryDate.format('dddd, MMMM D');
   return dateStirng;
 }
+
+export function validDeliveryOption(deliveryOptionId) {
+  let found = false;
+
+  deliveryOptions.forEach((option) => {
+    if (option.id === deliveryOptionId) {
+      found = true;
+    }
+  });
+
+  return found;
+}
