@@ -18,6 +18,14 @@ if(formatCurrency(0) === '0.00'){
   console.log('failed');
 }
 
+console.log('with a negative number');
+
+if(formatCurrency(-2095) === '-20.95'){
+  console.log('Test passed');
+}else{
+  console.log('failed');
+}
+
 console.log('rounds up to the nearest cent');
 
 if(formatCurrency(2000.5) === '20.01'){
