@@ -1,4 +1,4 @@
-import { cart, addToCart, calculateQuantity } from '../data/cart.js';
+import { addToCart, calculateQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
 
 let productsListHTML = '';
@@ -41,11 +41,6 @@ products.forEach((product) => {
             </select>
           </div>
 
-          <!--${
-            product instanceof Clothing
-              ? `<a href=${product.sizeChartLink}>Size Chart</a>`
-              : ''
-          } -->
 
           ${product.extraInfoHTML()}
 

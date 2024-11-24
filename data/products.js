@@ -42,6 +42,56 @@ export class Clothing extends Product {
   }
 }
 
+/*const date = new Date();
+console.log(date.toLocaleTimeString());
+*/
+
+/* console.log(this);
+
+const object2 = {
+  a: 1,
+  b: this.a, // undefined
+  getA(){
+    return this.a;
+  }
+}
+*/
+
+/*
+function logThis() {
+  console.log(this);
+}
+
+logThis.call('name');
+
+const object3 = {
+  method: ()=>{
+    console.log(this);
+  },
+  method2(){
+    console.log(this);
+  }
+}
+
+// object3.method();
+// object3.method2();
+
+const object4 = {
+  method(){
+    console.log(this);
+    [1,2,3].forEach(function(){
+      console.log(this); // undefined
+    });
+    [4,5,6].forEach(()=>{
+      console.log(this); // object4
+    })
+  }
+}
+
+console.log(object4.method());
+*/
+
+
 export const products = [
   {
     id: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
