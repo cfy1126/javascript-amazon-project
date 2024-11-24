@@ -1,9 +1,4 @@
-import {
-  cart,
-  removeFromCart,
-  updateQuantity,
-  updateDeliveryOption,
-} from '../../data/cart.js';
+import { cart } from '../../data/cart-class.js';
 import { getProduct } from '../../data/products.js';
 import {
   deliveryOptions,
@@ -16,7 +11,7 @@ import { renderCheckoutHeader } from './checkoutHeader.js';
 
 export function renderOrderSummary() {
   let cartSummaryHTML = '';
-  cart.forEach((cartItem) => {
+  cart.cartItems.forEach((cartItem) => {
     const matchingProduct = getProduct(cartItem.productId);
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
@@ -113,7 +108,7 @@ export function renderOrderSummary() {
   document.querySelectorAll('.js-delivery-option').forEach((input) => {
     input.addEventListener('click', () => {
       const { productId, deliveryOptionId } = input.dataset;
-      updateDeliveryOption(productId, deliveryOptionId);
+      cart.updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
       renderPaymentSummary();
     });
@@ -122,7 +117,7 @@ export function renderOrderSummary() {
   document.querySelectorAll('.js-delete-link').forEach((link) => {
     link.addEventListener('click', () => {
       const { productId } = link.dataset;
-      removeFromCart(productId);
+      cart.removeFromCart(productId);
       renderCheckoutHeader();
       renderOrderSummary();
       renderPaymentSummary();
@@ -149,13 +144,13 @@ export function renderOrderSummary() {
       );
       const newQuantity = Number(quantityInput.value);
       if (newQuantity > 0 && newQuantity < 1000) {
-        updateQuantity(productId, newQuantity);
+        cart.updateQuantity(productId, newQuantity);
         renderCheckoutHeader();
         renderOrderSummary();
         renderPaymentSummary();
       } else {
         alert('qiutity should be between 1 and 999');
-        quantityInput.value = cart.find(
+        quantityInput.value = cart.cartItems.find(
           (cartItem) => cartItem.productId === productId
         ).quantity;
       }

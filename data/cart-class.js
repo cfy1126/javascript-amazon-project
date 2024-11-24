@@ -25,7 +25,7 @@ class Cart {
   }
 
   saveToStorage() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
   addToCart(productId, updateQuantity) {
@@ -55,6 +55,7 @@ class Cart {
       }
     });
     this.cartItems = newCart;
+    console.log(this.cartItems);
     this.saveToStorage();
   }
 
@@ -95,10 +96,4 @@ class Cart {
   }
 }
 
-const cart = new Cart('cart-oop');
-const businessCart = new Cart('cart-business');
-
-console.log(cart);
-console.log(businessCart);
-
-console.log(cart instanceof Cart);
+export const cart = new Cart('cart');

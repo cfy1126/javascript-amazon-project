@@ -1,4 +1,4 @@
-import { addToCart, calculateQuantity } from '../data/cart.js';
+import { cart } from '../data/cart-class.js';
 import { products } from '../data/products.js';
 
 let productsListHTML = '';
@@ -81,12 +81,12 @@ document.querySelectorAll('.add-to-cart-button').forEach((button) => {
       addedMessageElement.classList.remove('added-to-cart-visible');
     }, 2000);
     // 更新购物车
-    addToCart(productId, updateQuantity);
+    cart.addToCart(productId, updateQuantity);
     showCartQuantity();
   });
 });
 showCartQuantity();
 // 显示购物车数量
 function showCartQuantity() {
-  document.querySelector('.js-cart-quantity').innerText = calculateQuantity();
+  document.querySelector('.js-cart-quantity').innerText = cart.calculateQuantity();
 }
