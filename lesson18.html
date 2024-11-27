@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lesson 18</title>
+  </head>
+  <body>
+    <script>
+      /*
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener('load', () => {
+        console.log(xhr.response);
+      });
+      xhr.open('GET', 'https://supersimplebackend.dev/greetings');
+      xhr.addEventListener('error', (error) => {
+        console.log('Unexpected error. Please try again later.', error);
+      });
+      xhr.send();
+      */
+
+      async function greeting() {
+        try {
+          const response = await fetch(
+            'https://supersimplebackend.dev/greeting',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              // body: JSON.stringify({ name: 'Liam' }),
+            }
+          );
+          console.log(response);
+          if (response.status >= 400) {
+            throw response;
+          }
+          const data = await response.text();
+        } catch (error) {
+          console.log(error);
+          if (error.status === 400) {
+            console.log(await error.json());
+          } else {
+            console.log('Unexpected error. Please try again later.', error);
+          }
+        }
+      }
+      greeting();
+    </script>
+  </body>
+</html>
