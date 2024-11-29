@@ -1,10 +1,10 @@
-import { validDeliveryOption } from "./deliveryOptions.js";
+import { validDeliveryOption } from './deliveryOptions.js';
 
 export let cart;
 
 loadFromStorage();
 
-export function loadFromStorage(){
+export function loadFromStorage() {
   cart = JSON.parse(localStorage.getItem('cart')) || [
     {
       productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
@@ -23,7 +23,7 @@ export function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-export function addToCart(productId, updateQuantity) {
+export function addToCart(productId, updateQuantity = 1) {
   let matchingProduct;
   cart.forEach((cartItem) => {
     if (cartItem.productId === productId) {
@@ -77,29 +77,29 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
       matchingItem = cartItem;
     }
   });
-  if(!matchingItem){
+  if (!matchingItem) {
     return;
   }
-  if(!validDeliveryOption(deliveryOptionId)){
+  if (!validDeliveryOption(deliveryOptionId)) {
     return;
   }
   matchingItem.deliveryOptionId = deliveryOptionId;
   saveToStorage();
 }
 
-export function loadCart(fun){
+export function loadCart(fun) {
   const xhr = new XMLHttpRequest();
 
-  xhr.addEventListener('load', ()=>{
+  xhr.addEventListener('load', () => {
     console.log(xhr.response);
     console.log('load cart');
     fun();
-  })
-  xhr.open('GET','https://supersimplebackend.dev/cart');
+  });
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
   xhr.send();
 }
 
-export async function loadCartFetch(){
+export async function loadCartFetch() {
   const response = await fetch('https://supersimplebackend.dev/cart');
   const data = await response.text();
   console.log(data);

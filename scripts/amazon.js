@@ -1,6 +1,8 @@
-import { addToCart, calculateQuantity } from '../data/cart.js';
+import { addToCart } from '../data/cart.js';
 import { products, loadProducts } from '../data/products.js';
+import { renderHeader } from './components/header.js';
 
+renderHeader();
 loadProducts(renderProductsGrid);
 
 export function renderProductsGrid() {
@@ -85,12 +87,7 @@ export function renderProductsGrid() {
       }, 2000);
       // 更新购物车
       addToCart(productId, updateQuantity);
-      showCartQuantity();
+      renderHeader();
     });
   });
-  showCartQuantity();
-  // 显示购物车数量
-  function showCartQuantity() {
-    document.querySelector('.js-cart-quantity').innerText = calculateQuantity();
-  }
 }
