@@ -6,13 +6,15 @@ class Product {
   name;
   rating;
   priceCents;
+  keywords;
 
-  constructor({ id, image, name, rating, priceCents }) {
+  constructor({ id, image, name, rating, priceCents, keywords }) {
     this.id = id;
     this.image = image;
     this.name = name;
     this.rating = rating;
     this.priceCents = priceCents;
+    this.keywords = keywords;
   }
 
   getStarsUrl() {

@@ -1,11 +1,29 @@
-import { addToCart, calculateQuantity } from '../data/cart.js';
+import { addToCart } from '../data/cart.js';
 import { products, loadProducts } from '../data/products.js';
+import { renderHeader, handleSearchButtonClick } from './components/header.js';
 
+renderHeader();
+handleSearchButtonClick();
 loadProducts(renderProductsGrid);
 
 export function renderProductsGrid() {
   let productsListHTML = '';
-  products.forEach((product) => {
+  const url = new URL(window.location.href);
+  const searchParam = url.searchParams.get('search');
+  let filteredProducts = products;
+
+  if(searchParam){
+    filteredProducts = products.filter((product)=>{
+      let matchingKeyword = false;
+      product.keywords.forEach((keyword)=>{
+        if(keyword.toLowerCase().includes(searchParam.toLowerCase())){
+          matchingKeyword = true;
+        }
+      });
+      return product.name.toLowerCase().includes(searchParam.toLowerCase()) || matchingKeyword;
+    })
+  }
+  filteredProducts.forEach((product) => {
     productsListHTML += `
             <div class="product-container">
             <div class="product-image-container">
@@ -85,12 +103,7 @@ export function renderProductsGrid() {
       }, 2000);
       // 更新购物车
       addToCart(productId, updateQuantity);
-      showCartQuantity();
+      renderHeader();
     });
   });
-  showCartQuantity();
-  // 显示购物车数量
-  function showCartQuantity() {
-    document.querySelector('.js-cart-quantity').innerText = calculateQuantity();
-  }
 }
