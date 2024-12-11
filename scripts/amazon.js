@@ -11,10 +11,16 @@ export function renderProductsGrid() {
   const url = new URL(window.location.href);
   const searchParam = url.searchParams.get('search');
   let filteredProducts = products;
+
   if(searchParam){
-    console.log(products);
     filteredProducts = products.filter((product)=>{
-      return product.name.toLowerCase().includes(searchParam.toLowerCase());
+      let matchingKeyword = false;
+      product.keywords.forEach((keyword)=>{
+        if(keyword.toLowerCase().includes(searchParam.toLowerCase())){
+          matchingKeyword = true;
+        }
+      });
+      return product.name.toLowerCase().includes(searchParam.toLowerCase()) || matchingKeyword;
     })
   }
   filteredProducts.forEach((product) => {
