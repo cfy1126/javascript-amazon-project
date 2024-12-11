@@ -1,13 +1,23 @@
 import { addToCart } from '../data/cart.js';
 import { products, loadProducts } from '../data/products.js';
-import { renderHeader } from './components/header.js';
+import { renderHeader, handleSearchButtonClick } from './components/header.js';
 
 renderHeader();
+handleSearchButtonClick();
 loadProducts(renderProductsGrid);
 
 export function renderProductsGrid() {
   let productsListHTML = '';
-  products.forEach((product) => {
+  const url = new URL(window.location.href);
+  const searchParam = url.searchParams.get('search');
+  let filteredProducts = products;
+  if(searchParam){
+    console.log(products);
+    filteredProducts = products.filter((product)=>{
+      return product.name.toLowerCase().includes(searchParam.toLowerCase());
+    })
+  }
+  filteredProducts.forEach((product) => {
     productsListHTML += `
             <div class="product-container">
             <div class="product-image-container">

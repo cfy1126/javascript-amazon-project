@@ -2,11 +2,12 @@ import { orders } from '../data/orders.js';
 import { formatCurrency } from './utils/money.js';
 import { getProduct, loadProductsFetch } from '../data/products.js';
 import { addToCart } from '../data/cart.js';
-import { renderHeader } from './components/header.js';
+import { renderHeader, handleSearchButtonClick } from './components/header.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 async function loadPage() {
   renderHeader();
+  handleSearchButtonClick();
   await loadProductsFetch();
   let ordersSummaryHTML = '';
   orders.forEach((orderItem) => {

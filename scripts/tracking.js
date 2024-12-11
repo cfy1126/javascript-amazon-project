@@ -16,9 +16,7 @@ async function loadPage() {
   let quantity;
   order.products.forEach((productItem) => {
     if (productItem.productId === productId) {
-      estimatedDeliveryTime = dayjs(productItem.estimatedDeliveryTime).format(
-        'dddd, MMMM D'
-      );
+      estimatedDeliveryTime = productItem.estimatedDeliveryTime;
       quantity = productItem.quantity;
     }
   });
@@ -35,7 +33,7 @@ async function loadPage() {
       </a>
   
       <div class="delivery-date">
-        Arriving on ${estimatedDeliveryTime}
+        Arriving on ${dayjs(estimatedDeliveryTime).format('dddd, MMMM D')}
       </div>
   
       <div class="product-info">
